@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { log } from 'util';
 //import 'web-bluetooth';
+//import 'chrome';
 
 @Component({
   selector: 'app-root',
@@ -35,6 +36,5 @@ export class AppComponent {
       .catch(error => {
         log('Argh! ' + error);
       });
-
   }
 }
