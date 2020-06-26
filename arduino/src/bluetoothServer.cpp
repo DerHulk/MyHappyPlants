@@ -2,7 +2,7 @@
 #include <BLEServer.h>
 #include <BLEUtils.h>
 #include <BLE2902.h>
-#include "bluetoothServer.h";
+#include "bluetoothServer.h"
 
 namespace myhappyplants
 {

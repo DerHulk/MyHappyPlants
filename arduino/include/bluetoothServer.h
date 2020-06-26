@@ -8,6 +8,12 @@
 
 namespace myhappyplants
 {
+    //class definition see:
+    //common https://stackoverflow.com/questions/3746484/why-am-i-getting-this-redefinition-of-class-error
+    //forward definition  https://stackoverflow.com/questions/2133250/x-does-not-name-a-type-error-in-c/2133260;    
+    class ServerCallbacks;
+    class CharacteristicCallbacks;
+
     class BluetoothServer
     {
 #define SERVICE_UUID "ab0828b1-198e-4351-b779-901fa0e0371e"
