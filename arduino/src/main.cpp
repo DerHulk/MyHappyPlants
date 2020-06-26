@@ -9,8 +9,7 @@ using namespace  myhappyplants;
 BluetoothServer* _Server;
 
 void setup()
-{ 
-  
+{   
   Serial.println("Bluetooth Device is Ready to Pair");
   pinMode(LED_BUILTIN, OUTPUT); //Specify that LED pin is output
   _Server = new BluetoothServer();

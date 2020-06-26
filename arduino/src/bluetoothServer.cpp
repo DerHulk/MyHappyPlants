@@ -6,80 +6,58 @@
 
 namespace myhappyplants
 {
-    class BluetoothServer
-    {        
-        BLECharacteristic* _characteristicTX; //através desse objeto iremos enviar dados para o client
-        BLEServer* _Server;
-        BLEService* _Service;
-        ServerCallbacks* _Callback;
-        CharacteristicCallbacks* _CharacteristicCallbacks;
-
-    public:
-        void start()
-        {
-            BLEDevice::init("ESP32-BLE");
-
-            _Callback = new ServerCallbacks(this);
-            _Server = BLEDevice::createServer();
-            _Server->setCallbacks(_Callback);
-            _CharacteristicCallbacks = new CharacteristicCallbacks();
-
-            _Service = _Server->createService(SERVICE_UUID);
-
-            _characteristicTX = _Service->createCharacteristic(CHARACTERISTIC_UUID_TX, BLECharacteristic::PROPERTY_NOTIFY);
-            _characteristicTX->addDescriptor(new BLE2902());
-
-            BLECharacteristic *characteristic = _Service->createCharacteristic(CHARACTERISTIC_UUID_RX,BLECharacteristic::PROPERTY_WRITE);
- 
-            characteristic->setCallbacks(_CharacteristicCallbacks);
-     
-            _Service->start();             
-            _Server->getAdvertising()->start();     
-                  
-        }
-
-        bool isConnected(){
-            return _Callback->isConnected();
-        }
-    };
-
-    class ServerCallbacks : public BLEServerCallbacks
+    void BluetoothServer::start()
     {
-        BluetoothServer *Server;
-        bool deviceConnected = false;
+        BLEDevice::init("ESP32-BLE");
 
-    public:
-        ServerCallbacks(BluetoothServer *server)
-        {
-            this->Server = server;
-        }
+        _Callback = new ServerCallbacks(this);
+        _Server = BLEDevice::createServer();
+        _Server->setCallbacks(_Callback);
+        _CharacteristicCallbacks = new CharacteristicCallbacks();
 
-        void onConnect(BLEServer *pServer)
-        {
-            deviceConnected = true;
-        };
+        _Service = _Server->createService(SERVICE_UUID);
 
-        void onDisconnect(BLEServer *pServer)        
-        {
-            deviceConnected = false;
-        }
+        _characteristicTX = _Service->createCharacteristic(CHARACTERISTIC_UUID_TX, BLECharacteristic::PROPERTY_NOTIFY);
+        _characteristicTX->addDescriptor(new BLE2902());
 
-        bool isConnected(){
-            return deviceConnected;
-        }
-    };
+        BLECharacteristic *characteristic = _Service->createCharacteristic(CHARACTERISTIC_UUID_RX, BLECharacteristic::PROPERTY_WRITE);
 
-    class CharacteristicCallbacks : public BLECharacteristicCallbacks
+        characteristic->setCallbacks(_CharacteristicCallbacks);
+
+        _Service->start();
+        _Server->getAdvertising()->start();
+    }
+
+    bool BluetoothServer::isConnected()
     {
-        //we starts reading
-        void onWrite(BLECharacteristic *characteristic)
-        {                        
-            std::string rxValue = characteristic->getValue();         
-            if (rxValue.length() > 0)
-            {
+        return _Callback->isConnected();
+    }
 
-            }
-        }
+    ServerCallbacks::ServerCallbacks(BluetoothServer *server)
+    {
+        this->Server = server;
+    }
+
+    void ServerCallbacks::onConnect(BLEServer *pServer)
+    {
+        deviceConnected = true;
     };
-}
 
+    void ServerCallbacks::onDisconnect(BLEServer *pServer)
+    {
+        deviceConnected = false;
+    }
+
+    bool ServerCallbacks::isConnected()
+    {
+        return deviceConnected;
+    }
+
+    void CharacteristicCallbacks::onWrite(BLECharacteristic *characteristic)
+    {
+        std::string rxValue = characteristic->getValue();
+        if (rxValue.length() > 0)
+        {
+        }
+    }
+} // namespace myhappyplants
