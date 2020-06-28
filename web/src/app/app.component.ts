@@ -60,6 +60,10 @@ export class AppComponent {
         return this.myCharacteristic.startNotifications().then(_ => {
           log('> Notifications started');
           this.myCharacteristic.addEventListener('characteristicvaluechanged',this.handleNotifications);
+
+          log('> send some values');
+          var uint8array = new TextEncoder().encode("test");
+          this.myCharacteristic.writeValue(uint8array);
         });
       })
       .catch(error => {

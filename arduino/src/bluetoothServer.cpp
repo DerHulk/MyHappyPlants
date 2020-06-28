@@ -18,7 +18,7 @@ namespace myhappyplants
         _Service = _Server->createService(SERVICE_UUID);
 
         _characteristicTX = _Service->createCharacteristic(CHARACTERISTIC_UUID_TX, BLECharacteristic::PROPERTY_NOTIFY);
-        _characteristicTX->addDescriptor(new BLE2902());
+        _characteristicTX->addDescriptor(new BLE2902());       
 
         BLECharacteristic *characteristic = _Service->createCharacteristic(CHARACTERISTIC_UUID_RX, BLECharacteristic::PROPERTY_WRITE);
 
@@ -58,6 +58,7 @@ namespace myhappyplants
         std::string rxValue = characteristic->getValue();
         if (rxValue.length() > 0)
         {
+             printf("Received data.");
         }
     }
 } // namespace myhappyplants

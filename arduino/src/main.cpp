@@ -20,7 +20,7 @@ void setup()
 void loop()
 {  
   if(_Server->isConnected() ){
-    printf("Received:");
+    printf("Connected");
     digitalWrite(LED_BUILTIN, HIGH);
     delay(2000);
   }
