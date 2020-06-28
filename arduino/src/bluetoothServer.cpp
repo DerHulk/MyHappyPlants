@@ -17,8 +17,9 @@ namespace myhappyplants
 
         _Service = _Server->createService(SERVICE_UUID);
 
-        _characteristicTX = _Service->createCharacteristic(CHARACTERISTIC_UUID_TX, BLECharacteristic::PROPERTY_NOTIFY);
+        _characteristicTX = _Service->createCharacteristic(CHARACTERISTIC_UUID_TX, BLECharacteristic::PROPERTY_NOTIFY | BLECharacteristic::PROPERTY_WRITE | BLECharacteristic::PROPERTY_READ);
         _characteristicTX->addDescriptor(new BLE2902());       
+        _characteristicTX->setCallbacks(_CharacteristicCallbacks);
 
         BLECharacteristic *characteristic = _Service->createCharacteristic(CHARACTERISTIC_UUID_RX, BLECharacteristic::PROPERTY_WRITE);
 
