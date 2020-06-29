@@ -20,11 +20,7 @@ namespace myhappyplants
         _characteristicTX = _Service->createCharacteristic(CHARACTERISTIC_UUID_TX, BLECharacteristic::PROPERTY_NOTIFY | BLECharacteristic::PROPERTY_WRITE | BLECharacteristic::PROPERTY_READ);
         _characteristicTX->addDescriptor(new BLE2902());       
         _characteristicTX->setCallbacks(_CharacteristicCallbacks);
-
-        BLECharacteristic *characteristic = _Service->createCharacteristic(CHARACTERISTIC_UUID_RX, BLECharacteristic::PROPERTY_WRITE);
-
-        characteristic->setCallbacks(_CharacteristicCallbacks);
-
+        
         _Service->start();
         _Server->getAdvertising()->start();
     }
@@ -60,6 +56,8 @@ namespace myhappyplants
         if (rxValue.length() > 0)
         {
              printf("Received data.");
+             characteristic->setValue("test");
+             characteristic->notify(true);
         }
     }
 } // namespace myhappyplants

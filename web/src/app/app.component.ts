@@ -35,7 +35,6 @@ export class AppComponent {
 
     options.acceptAllDevices = true;
     options.optionalServices = [serviceUUID];
-    //options.filters = [{services: [serviceUUID]}];
 
     log('Requesting Bluetooth Device...');
     log('with ' + JSON.stringify(options));
@@ -59,11 +58,7 @@ export class AppComponent {
         this.myCharacteristic = characteristic;
         return this.myCharacteristic.startNotifications().then(_ => {
           log('> Notifications started');
-          this.myCharacteristic.addEventListener('characteristicvaluechanged',this.handleNotifications);
-
-          log('> send some values');
-          var uint8array = new TextEncoder().encode("test");
-          this.myCharacteristic.writeValue(uint8array);
+          this.myCharacteristic.addEventListener('characteristicvaluechanged', this.handleNotifications);
         });
       })
       .catch(error => {
@@ -74,26 +69,30 @@ export class AppComponent {
   public disconnect() {
     if (this.myCharacteristic) {
       this.myCharacteristic.stopNotifications()
-      .then(_ => {
-        log('> Notifications stopped');
-        this.myCharacteristic.removeEventListener('characteristicvaluechanged', this.handleNotifications);
-        this.myCharacteristic.service.device.gatt.disconnect();
-      })
-      .catch(error => {
-        log('Argh! ' + error);
-      });
+        .then(_ => {
+          log('> Notifications stopped');
+          this.myCharacteristic.removeEventListener('characteristicvaluechanged', this.handleNotifications);
+          this.myCharacteristic.service.device.gatt.disconnect();
+        })
+        .catch(error => {
+          log('Argh! ' + error);
+        });
+    }
+  }
+
+  public sendSomeData() {
+    if (this.myCharacteristic) {
+      log('> send some values');
+      var uint8array = new TextEncoder().encode("test");
+      this.myCharacteristic.writeValue(uint8array);
     }
   }
 
   private handleNotifications(event) {
     let value = event.target.value;
-    let a = [];
-    // Convert raw data bytes to hex values just for the sake of showing something.
-    // In the "real" world, you'd use data.getUint8, data.getUint16 or even
-    // TextDecoder to process raw data bytes.
-    for (let i = 0; i < value.byteLength; i++) {
-      a.push('0x' + ('00' + value.getUint8(i).toString(16)).slice(-2));
-    }
-    log('> ' + a.join(' '));
+    const readed = new TextDecoder().decode(value);
+
+    log('> Receive data...' + readed);
+
   }
 }
