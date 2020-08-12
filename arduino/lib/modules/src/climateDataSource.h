@@ -1,28 +1,31 @@
-// #ifdef UNIT_TEST
-// #include "mockDht.h"
-// #include "WString.h"
-// #else
-// #include <Arduino.h>
-// #include "DHT.h";
-// #endif
+#ifdef UNIT_TEST
+#include "mockDht.h"
+#else
+#include <Arduino.h>
+#include "DHT.h"
+#endif
 
-// #include "iDataSource.h"
+#include "iDataSource.h"
 
-// #ifndef dhtDataSource_H
-// #define dhtDataSource_H
+#ifndef dhtDataSource_H
+#define dhtDataSource_H
 
-// namespace myhappyplants
-// {
-//     class climateDataSource : iDataSource
-//     {
-//     private:
-//         DHT *_Sensor;
+namespace myhappyplants
+{
+    class ClimateDataSource : iDataSource
+    {
+    private:
+        DHT *_Sensor;
 
-//     public:
-//         climateDataSource(int pintToUse);
-//         ~climateDataSource();
-//         const char* GetData();
-//     };
-// }
+    public:
+        ClimateDataSource(DHT *sensor)
+        {
+            _Sensor = sensor;
+        };
 
-// #endif
+        ~ClimateDataSource();
+        const char *GetData();
+    };
+} // namespace myhappyplants
+
+#endif
