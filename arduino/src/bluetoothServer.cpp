@@ -52,12 +52,12 @@ namespace myhappyplants
 
     void CharacteristicCallbacks::onWrite(BLECharacteristic *characteristic)
     {
-        std::string rxValue = characteristic->getValue();
-        if (rxValue.length() > 0)
+        std::string commandRequest = characteristic->getValue();
+        if (commandRequest.length() > 0)
         {
              printf("Received data.");
              characteristic->setValue("test");
              characteristic->notify(true);
         }
     }
-} // namespace myhappyplants
+}

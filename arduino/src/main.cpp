@@ -1,3 +1,4 @@
+
 #include <Arduino.h>
 #include "bluetoothServer.h"
 #include "iDataSource.h";
@@ -28,12 +29,7 @@ void loop()
 {  
   if(_Server->isConnected() ){
     printf("Connected");
-    digitalWrite(LED_BUILTIN, HIGH);
-
-    float currentTemperature  = dht.readTemperature();
-    float currentHymanid = dht.readHumidity();
-    float humanidIndex = dht.computeHeatIndex();
-
+    digitalWrite(LED_BUILTIN, HIGH);    
 
     delay(2000);
   }
