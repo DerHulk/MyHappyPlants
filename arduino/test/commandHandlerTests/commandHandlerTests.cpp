@@ -1,28 +1,34 @@
 
 #ifndef commandHandlerTests_H
-    #include <unity.h>
+#include <unity.h>
 #endif
 
 #include "commandHandler.h"
 
 using namespace myhappyplants;
 
+CommandHandler *target;
 
-void setUp(void) {
-// set stuff up here
+void setUp(void)
+{
+    target = new CommandHandler();
 }
 
-void tearDown(void) {
-// clean stuff up here
+void tearDown(void)
+{
+    delete target;
 }
 
 void CommandHandlerTests_ctor01(void)
 {
-    CommandHandler *handler = new CommandHandler();
-    TEST_ASSERT_NOT_NULL(handler);
+    //arrange
+    //act
+    //assert
+    TEST_ASSERT_NOT_NULL(target);
 }
 
-int main(int argc, char **argv) {
+int main(int argc, char **argv)
+{
     UNITY_BEGIN();
     RUN_TEST(CommandHandlerTests_ctor01);
     UNITY_END();
