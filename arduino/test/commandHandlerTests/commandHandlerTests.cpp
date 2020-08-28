@@ -7,7 +7,7 @@
 
 using namespace myhappyplants;
 
-CommandHandler *target;
+CommandHandler* target;
 
 void setUp(void)
 {
@@ -16,7 +16,7 @@ void setUp(void)
 
 void tearDown(void)
 {
-    delete target;
+    //delete target;
 }
 
 void ctor01(void)
@@ -38,11 +38,22 @@ void Execute01(){
     TEST_ASSERT_EQUAL(*expected, *result);
 }
 
+void Foo01(){
+    //arrange    
+    //act
+    List<float>* result = target->foo();
+
+    //assert
+    TEST_ASSERT_NOT_NULL(result);
+    TEST_ASSERT_EQUAL(3,result->Length());
+}
+
 int main(int argc, char **argv)
 {
     UNITY_BEGIN();
     RUN_TEST(ctor01);
     RUN_TEST(Execute01);
+    RUN_TEST(Foo01);
     UNITY_END();
 
     return 0;

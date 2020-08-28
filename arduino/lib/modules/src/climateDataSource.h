@@ -1,7 +1,6 @@
 #ifdef UNIT_TEST
 #include "mockDht.h"
 #else
-#include <Arduino.h>
 #include "DHT.h"
 #endif
 
@@ -15,16 +14,13 @@ namespace myhappyplants
     class ClimateDataSource : iDataSource
     {
     private:
-        DHT *_Sensor;
+         DHT _Sensor;
 
     public:
-        ClimateDataSource(DHT *sensor)
-        {
-            _Sensor = sensor;
-        };
+        ClimateDataSource(int pin) : _Sensor(pin, DHT22, 1){};
 
         ~ClimateDataSource();
-        const char *GetData();
+        List<float>* GetData();
     };
 } // namespace myhappyplants
 
