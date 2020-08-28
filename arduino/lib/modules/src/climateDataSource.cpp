@@ -2,9 +2,15 @@
 
 namespace myhappyplants
 {
-    ClimateDataSource::~ClimateDataSource()
-    {
-    }
+    // ClimateDataSource::ClimateDataSource(DHT &sensor):_Sensor(sensor)
+    // {
+        
+    // }
+    
+    // ClimateDataSource::~ClimateDataSource()
+    // {     
+
+    // }
 
     List<float> *ClimateDataSource::GetData()
     {
@@ -15,10 +21,14 @@ namespace myhappyplants
         float *values = new float[3]{
             temperature,
             humidity,
-            headIndex
-        };
-        
+            headIndex};
+
         return new List<float>(values, 3);
+    }
+
+    float ClimateDataSource::getT()
+    {
+        return _Sensor.readTemperature();
     }
 
 } // namespace myhappyplants

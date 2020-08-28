@@ -5,13 +5,9 @@
 using namespace myhappyplants;
 
 ClimateDataSource *target;
-DHT* sensorMock;
 
 void setUp(void)
-{
-    // sensorMock = new DHT(1, 1, 1);
-    //target = new ClimateDataSource(1);
-    //target = new ClimateDataSource();
+{   
 }
 
 void tearDown(void)
@@ -21,24 +17,39 @@ void tearDown(void)
 
 void ctor01(void)
 {
-    //arrange
+    //arrange   
+    DHT sensorMock = DHT(1, 1, 1);
     target = nullptr;    
     //act
-    target = new ClimateDataSource(1);
+    target = new ClimateDataSource(sensorMock);
     //assert
-    TEST_ASSERT_NOT_NULL(target);
+    TEST_ASSERT_NOT_NULL(target);    
 }
 
 void GetData01(void)
 {
     //arrange
-    target = new ClimateDataSource(1);
+    float expectedTemperature = 99;
+    float expectedHumidity = 101;
+    float expectedHeat = 333;
+
+    DHT sensorMock = DHT(1, 1, 1);
+    target = new ClimateDataSource(sensorMock);
+
+    sensorMock.setTemperature(expectedTemperature);
+    sensorMock.setHumidity(expectedHumidity);
+    sensorMock.setHeatIndex(expectedHeat);
+    
+    float t = target->getT();
     // //act
     List<float>* result = target->GetData();    
 
     // //assert
     TEST_ASSERT_NOT_NULL(result);
     TEST_ASSERT_EQUAL(3, result->Length());
+    TEST_ASSERT_EQUAL(expectedTemperature,result->Get(0));
+    TEST_ASSERT_EQUAL(expectedHumidity,result->Get(1));
+    TEST_ASSERT_EQUAL(expectedHeat,result->Get(2)); 
 }
 
 int main(int argc, char **argv)

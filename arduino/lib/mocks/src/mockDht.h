@@ -25,6 +25,15 @@ public:
                          bool isFahrenheit = true);
   float readHumidity(bool force = false);
   bool read(bool force = false);
+
+  void setTemperature(float value);
+  void setHumidity(float value);
+  void setHeatIndex(float value);
+
+  private:
+    float _Temperature;
+    float _Humidity;
+    float _HeatIndex;
 };
 
 #endif

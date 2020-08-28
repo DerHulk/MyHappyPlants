@@ -14,13 +14,14 @@ namespace myhappyplants
     class ClimateDataSource : iDataSource
     {
     private:
-         DHT _Sensor;
+         DHT& _Sensor;
 
-    public:
-        ClimateDataSource(int pin) : _Sensor(pin, DHT22, 1){};
+    public:        
+        ClimateDataSource(DHT& s) :_Sensor(s) {};                
 
         ~ClimateDataSource();
         List<float>* GetData();
+        float getT();
     };
 } // namespace myhappyplants
 
