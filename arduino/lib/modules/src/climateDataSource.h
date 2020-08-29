@@ -11,7 +11,7 @@
 
 namespace myhappyplants
 {
-    class ClimateDataSource : iDataSource
+    class ClimateDataSource  : public iDataSource
     {
     private:
          DHT& _Sensor;
@@ -20,8 +20,7 @@ namespace myhappyplants
         ClimateDataSource(DHT& s) :_Sensor(s) {};                
 
         ~ClimateDataSource();
-        List<float>* GetData();
-        float getT();
+        List<float>* GetData();        
     };
 } // namespace myhappyplants
 

@@ -11,8 +11,8 @@ namespace myhappyplants
 {
     class iDataSource
     {
-    public:
-        virtual List<float>* GetData() = 0;
+    public:        
+        virtual List<float>* GetData() = 0;        
     };
 }
 #endif

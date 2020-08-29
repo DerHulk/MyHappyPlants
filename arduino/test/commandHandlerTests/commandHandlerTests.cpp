@@ -3,15 +3,30 @@
 #include <unity.h>
 #endif
 
-#include "commandHandler.h"
+#include <simpleDataSource.h>
+#include <commandHandler.h>
 
 using namespace myhappyplants;
 
-CommandHandler* target;
+CommandHandler *target;
+
+iDataSource *CreateDataSource(List<float>* values)
+{    
+    SimpleDataSource *source = new SimpleDataSource(*values);            
+
+    return source;
+}
+
+iDataSource *CreateDataSource(float v1 = 0, float v2 = 0, float v3 = 0)
+{
+    float array[3] = {v1, v2, v3};
+    List<float> *values = new List<float>(array, 3);    
+
+    return CreateDataSource(values);
+}
 
 void setUp(void)
 {
-    target = new CommandHandler();
 }
 
 void tearDown(void)
@@ -22,30 +37,33 @@ void tearDown(void)
 void ctor01(void)
 {
     //arrange
+    target = nullptr;
+    iDataSource* s1 = CreateDataSource();
+    iDataSource* s2 = CreateDataSource();
+
     //act
+    target = new CommandHandler(*s1,*s2);
+
     //assert
     TEST_ASSERT_NOT_NULL(target);
 }
 
-void Execute01(){
+void Execute01()
+{
     //arrange
-    const char* expected = "20,100%";
+    List<float> *expected = new List<float>(new float[3]{1,2,3},3);
+    iDataSource* s1 = CreateDataSource(4,5,6);
+    iDataSource* s2 = CreateDataSource(expected);
+    target = new CommandHandler(*s1,*s2);
+
     Commands command = Commands::getClimate;
-    //act
-    const char* result = target->Execute(command);
 
-    //assert
-    TEST_ASSERT_EQUAL(*expected, *result);
-}
-
-void Foo01(){
-    //arrange    
     //act
-    List<float>* result = target->foo();
+    List<float> *result = target->Execute(command);
 
     //assert
     TEST_ASSERT_NOT_NULL(result);
-    TEST_ASSERT_EQUAL(3,result->Length());
+    TEST_ASSERT_EQUAL(expected, result);       
 }
 
 int main(int argc, char **argv)
@@ -53,7 +71,6 @@ int main(int argc, char **argv)
     UNITY_BEGIN();
     RUN_TEST(ctor01);
     RUN_TEST(Execute01);
-    RUN_TEST(Foo01);
     UNITY_END();
 
     return 0;

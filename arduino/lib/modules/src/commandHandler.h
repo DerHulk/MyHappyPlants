@@ -8,21 +8,22 @@
 #define commandHandler_H
 
 #include <list.h>
+#include <iDataSource.h>
 
 enum Commands{none = 0, getGroundMoisture= 1, getClimate = 2};
 
 namespace myhappyplants
 {
     class CommandHandler
-    {
-    private:
-       
-    public:
-        CommandHandler() {};
-        ~CommandHandler() {};
-        const char* Execute(Commands command);
+    {                       
+        private: 
+            iDataSource& _GroundMoisture;
+            iDataSource& _Climate;
 
-        List<float>* foo();        
+    public:
+        CommandHandler(iDataSource &groundMoisture, iDataSource &climate): _GroundMoisture(groundMoisture), _Climate(climate) {};
+        ~CommandHandler() {};
+        List<float>* Execute(Commands command);                
     };
 }
 

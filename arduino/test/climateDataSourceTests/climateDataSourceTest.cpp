@@ -39,8 +39,7 @@ void GetData01(void)
     sensorMock.setTemperature(expectedTemperature);
     sensorMock.setHumidity(expectedHumidity);
     sensorMock.setHeatIndex(expectedHeat);
-    
-    float t = target->getT();
+        
     // //act
     List<float>* result = target->GetData();    
 

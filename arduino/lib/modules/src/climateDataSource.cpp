@@ -1,17 +1,7 @@
 #include "climateDataSource.h"
 
 namespace myhappyplants
-{
-    // ClimateDataSource::ClimateDataSource(DHT &sensor):_Sensor(sensor)
-    // {
-        
-    // }
-    
-    // ClimateDataSource::~ClimateDataSource()
-    // {     
-
-    // }
-
+{   
     List<float> *ClimateDataSource::GetData()
     {
         float temperature = _Sensor.readTemperature();
@@ -24,11 +14,6 @@ namespace myhappyplants
             headIndex};
 
         return new List<float>(values, 3);
-    }
-
-    float ClimateDataSource::getT()
-    {
-        return _Sensor.readTemperature();
-    }
+    }    
 
 } // namespace myhappyplants

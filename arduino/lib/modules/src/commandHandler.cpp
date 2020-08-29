@@ -2,34 +2,27 @@
 
 namespace myhappyplants
 {
-    const char *CommandHandler::Execute(Commands command)
+    List<float>*CommandHandler::Execute(Commands command)
     {
+        List<float>* result;
+
         switch (command)
         {
         case none:
-            return "";
+            result = new List<float>(nullptr,0);
             break;
         case getGroundMoisture:
-            return "100%";
+            result = this->_GroundMoisture.GetData();
             break;
         case getClimate:
-            return "20,100%";
+            result = this->_Climate.GetData();
             break;
 
         default:
-            return "";
+            result = new List<float>(nullptr,0);
             break;
         }
-    }
 
-    List<float>* CommandHandler::foo(){
-
-        float *values = new float[3]{
-            12,
-            133,
-            3
-        };
-
-        return new List<float>(values, 3);
-    }
+        return result;
+    }    
 } // namespace myhappyplants

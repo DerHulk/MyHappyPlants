@@ -1,4 +1,7 @@
 
+#ifndef list_H
+#define list_H
+
 namespace myhappyplants
 {
     template <typename T>
@@ -18,3 +21,5 @@ namespace myhappyplants
     template class List<double>;
     template class List<float>;
 } // namespace myhappyplants
+
+#endif
