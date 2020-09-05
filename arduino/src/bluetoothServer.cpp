@@ -1,8 +1,6 @@
-#include <BLEDevice.h>
-#include <BLEServer.h>
-#include <BLEUtils.h>
-#include <BLE2902.h>
-#include "bluetoothServer.h"
+#include <bluetoothServer.h>
+#include <characteristicCallbacks.h>
+#include <serverCallbacks.h>
 
 namespace myhappyplants
 {
@@ -30,34 +28,7 @@ namespace myhappyplants
         return _Callback->isConnected();
     }
 
-    ServerCallbacks::ServerCallbacks(BluetoothServer *server)
-    {
-        this->Server = server;
-    }
+    
 
-    void ServerCallbacks::onConnect(BLEServer *pServer)
-    {
-        deviceConnected = true;
-    };
-
-    void ServerCallbacks::onDisconnect(BLEServer *pServer)
-    {
-        deviceConnected = false;
-    }
-
-    bool ServerCallbacks::isConnected()
-    {
-        return deviceConnected;
-    }
-
-    void CharacteristicCallbacks::onWrite(BLECharacteristic *characteristic)
-    {
-        std::string commandRequest = characteristic->getValue();
-        if (commandRequest.length() > 0)
-        {
-             printf("Received data.");
-             characteristic->setValue("test");
-             characteristic->notify(true);
-        }
-    }
+   
 }

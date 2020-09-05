@@ -35,24 +35,6 @@ namespace myhappyplants
         bool isConnected();
     };
 
-    class ServerCallbacks : public BLEServerCallbacks
-    {
-    private:
-        BluetoothServer *Server;
-        bool deviceConnected = false;
-
-    public:
-        ServerCallbacks(BluetoothServer *server);
-        void onConnect(BLEServer *pServer);
-        void onDisconnect(BLEServer *pServer);
-        bool isConnected();
-    };
-
-    class CharacteristicCallbacks : public BLECharacteristicCallbacks
-    {
-        void onWrite(BLECharacteristic *characteristic);
-    };
-
 } // namespace myhappyplants
 
 #endif
