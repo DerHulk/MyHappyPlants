@@ -12,7 +12,7 @@ namespace myhappyplants
         int _Length = 0;
 
     public:
-        List(T *array, int length) : _Length(length), _Array(array){};
+        List(T *array, int length) : _Array(array), _Length(length) {};
         int Length();
         T Get(int index);
     };
