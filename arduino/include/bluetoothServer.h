@@ -6,6 +6,8 @@
 #include <BLEUtils.h>
 #include <BLE2902.h>
 
+#include <commandHandler.h>
+
 namespace myhappyplants
 {
     //class definition see:
@@ -31,7 +33,7 @@ namespace myhappyplants
         CharacteristicCallbacks *_CharacteristicCallbacks;
 
     public:
-        void start();
+        void start(CommandHandler* handler);
         bool isConnected();
     };
 

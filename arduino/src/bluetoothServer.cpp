@@ -2,16 +2,17 @@
 #include <characteristicCallbacks.h>
 #include <serverCallbacks.h>
 
+
 namespace myhappyplants
 {
-    void BluetoothServer::start()
+    void BluetoothServer::start(CommandHandler* handler)
     {
         BLEDevice::init("ESP32-BLE");
 
         _Callback = new ServerCallbacks(this);
         _Server = BLEDevice::createServer();
         _Server->setCallbacks(_Callback);
-        _CharacteristicCallbacks = new CharacteristicCallbacks();
+        _CharacteristicCallbacks = new CharacteristicCallbacks(handler);
 
         _Service = _Server->createService(SERVICE_UUID);
 

@@ -13,7 +13,7 @@
 enum Commands{none = 0, getGroundMoisture= 1, getClimate = 2};
 
 namespace myhappyplants
-{
+{    
     class CommandHandler
     {                       
         private: 
