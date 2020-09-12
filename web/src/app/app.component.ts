@@ -83,7 +83,7 @@ export class AppComponent {
   public sendSomeData() {
     if (this.myCharacteristic) {
       log('> send some values');
-      var uint8array = new TextEncoder().encode("test");
+      var uint8array = new TextEncoder().encode("2");
       this.myCharacteristic.writeValue(uint8array);
     }
   }
@@ -92,7 +92,7 @@ export class AppComponent {
     let value = event.target.value;
     const readed = new TextDecoder().decode(value);
 
-    log('> Receive data...' + readed);
+    log('> Receive data...' + value);
 
   }
 }

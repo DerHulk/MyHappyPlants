@@ -5,13 +5,13 @@ namespace myhappyplants
 {
     void CharacteristicCallbacks::onWrite(BLECharacteristic *characteristic)
     {
-        printf("Received BT request.");        
+        printf("Received BT request.");
         std::string request = characteristic->getValue();
 
         if (request.length() == 0)
             return;
 
-        printf("Received BT data.");        
+        printf("Received BT data.");
 
         Commands requestCommand = Commands::none;
 
@@ -23,12 +23,21 @@ namespace myhappyplants
 
         List<float> *result = this->_Handler->Execute(requestCommand);
 
+        String notification = "";
+        String splitter = ";";
+
         for (int i = 0; i < result->Length(); i++)
         {
-            printf("Send BT data.");        
+            printf("Send BT data.");
             float value = result->Get(i);
-            characteristic->setValue(value);
-        }             
+            String v = String(value);    
+                    
+            notification.concat(v);    
+            notification.concat(splitter);
+        }
+
+        characteristic->setValue(notification.c_str());
+        characteristic->notify(true);
     }
 
 } // namespace myhappyplants
