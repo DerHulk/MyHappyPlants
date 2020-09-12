@@ -30,7 +30,9 @@ void setup()
   _Handler = new CommandHandler(*groundMoisture, *climate);
   _Server = new BluetoothServer();
 
+  printf("Start dht.");
   dht.begin();  
+
   _Server->start(_Handler);
   
 }

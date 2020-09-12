@@ -6,7 +6,7 @@ namespace myhappyplants
     {
         float temperature = _Sensor.readTemperature();
         float humidity = _Sensor.readHumidity();
-        float headIndex = _Sensor.computeHeatIndex();
+        float headIndex = _Sensor.computeHeatIndex(false);
 
         float *values = new float[3]{
             temperature,
