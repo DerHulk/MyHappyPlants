@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { log } from 'util';
+import { CommandModelAbstract } from 'src/models/commandModelAbstract';
+import { GetClimateCommandModel } from 'src/models/getClimateCommandModel';
+import { GetGroundMoistureCommandModel } from 'src/models/getGroundMoistureCommandModel';
 //import 'web-bluetooth';
 //import 'chrome';
 
@@ -15,11 +18,23 @@ export class AppComponent {
   //and https://www.bluetooth.com/specifications/gatt/services/
 
   public title: string;
+  public commands: CommandModelAbstract[];
+  public selectedCommand: CommandModelAbstract;
+  public commandResponse: string[];
+  public isConnected: boolean;
+
   private myCharacteristic: BluetoothRemoteGATTCharacteristic;
+
 
   constructor() {
 
     this.title = 'MyHappyPlants :-)';
+    this.isConnected = false;
+    this.commandResponse = [];
+    this.commands = [new GetClimateCommandModel(),
+    new GetGroundMoistureCommandModel()];
+
+    this.selectedCommand = null;
   }
 
   public connect() {
@@ -59,10 +74,12 @@ export class AppComponent {
         return this.myCharacteristic.startNotifications().then(_ => {
           log('> Notifications started');
           this.myCharacteristic.addEventListener('characteristicvaluechanged', this.handleNotifications);
+          this.isConnected = true;
         });
       })
       .catch(error => {
         log('Argh! ' + error);
+        this.isConnected = false;
       });
   }
 
@@ -80,19 +97,21 @@ export class AppComponent {
     }
   }
 
-  public sendSomeData() {
-    if (this.myCharacteristic) {
+  public sendCommand() {
+    if (this.myCharacteristic && this.selectedCommand) {
       log('> send some values');
-      var uint8array = new TextEncoder().encode("2");
+      const uint8array = new TextEncoder().encode(this.selectedCommand.bluetoothCommand);
       this.myCharacteristic.writeValue(uint8array);
     }
   }
 
   private handleNotifications(event) {
+
     let value = event.target.value;
     const readed = new TextDecoder().decode(value);
 
-    log('> Receive data...' + value);
-
+    if (this.selectedCommand) {
+      this.commandResponse = this.selectedCommand.ParseResponse(readed);
+    }
   }
 }
