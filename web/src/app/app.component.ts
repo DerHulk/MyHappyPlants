@@ -31,8 +31,7 @@ export class AppComponent {
     this.title = 'MyHappyPlants :-)';
     this.isConnected = false;
     this.commandResponse = [];
-    this.commands = [new GetClimateCommandModel(),
-    new GetGroundMoistureCommandModel()];
+    this.commands = [new GetClimateCommandModel(), new GetGroundMoistureCommandModel()];
 
     this.selectedCommand = null;
   }

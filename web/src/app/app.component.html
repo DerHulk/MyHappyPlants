@@ -12,7 +12,7 @@
   <li>
     <select [(ngModel)]="selectedCommand" name="command">
       <option value="" selected></option>
-      <option *ngFor="let c of commands" [value]="c.titel">
+      <option *ngFor="let c of commands" [ngValue]="c">
         {{c.titel}}
       </option>
     </select>
@@ -26,7 +26,7 @@
     </ul>
   </li>
   <li>
-    <button [disabled]="!isConnected" (click)="sendSomeData()">Execute Command</button>
+    <button [disabled]="!isConnected" (click)="sendCommand()">Execute Command</button>
   </li>
   <li>
     <button [disabled]="!isConnected" (click)="disconnect()">disconnect</button>
