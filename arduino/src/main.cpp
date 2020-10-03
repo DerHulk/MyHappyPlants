@@ -1,13 +1,15 @@
 
 #include <Arduino.h>
 #include <bluetoothServer.h>
-#include <iDataSource.h>;
-#include <climateDataSource.h>;
+#include <iDataSource.h>
+#include <climateDataSource.h>
+#include <analogDataSource.h>
 #include <simpleDataSource.h>
 #include <commandHandler.h>
 
 int LED_BUILTIN = 2;
 int DHT_BUILTIN = 4;
+int CSMS_BUILTIN = 5;
 
 using namespace myhappyplants;
 
@@ -20,12 +22,10 @@ void setup()
 {
   printf("Bluetooth Device is Ready to Pair");
   pinMode(LED_BUILTIN, OUTPUT);
-
-  List<float> *dummyA = new List<float>(new float[1]{1}, 1);
-  List<float> *dummyB = new List<float>(new float[2]{2, 1}, 2);
-
+  pinMode(CSMS_BUILTIN, INPUT);
+  
   iDataSource *climate = new ClimateDataSource(dht);
-  iDataSource *groundMoisture = new SimpleDataSource(*dummyB);
+  iDataSource *groundMoisture = new AnalogDataSource(CSMS_BUILTIN);
 
   _Handler = new CommandHandler(*groundMoisture, *climate);
   _Server = new BluetoothServer();
